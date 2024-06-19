@@ -84,6 +84,16 @@ trait PackageTrait
     }
 
     /**
+     * Номер упаковки.
+     *
+     * @return string
+     */
+    public function getNumber()
+    {
+        return $this->number;
+    }
+
+    /**
      * Устанавливает ID упаковки
      */
     public function setPackageId(string $packageId): self
