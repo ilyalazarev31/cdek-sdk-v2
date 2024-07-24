@@ -96,7 +96,7 @@ trait PackageTrait
     /**
      * Устанавливает ID упаковки
      */
-    public function setPackageId(string $packageId): self
+    public function setPackageId(string $packageId)
     {
         $this->package_id = $packageId;
 
@@ -106,7 +106,7 @@ trait PackageTrait
     /**
      * Получить ID упаковки
      */
-    public function getPackageId(): ?string
+    public function getPackageId()
     {
         return $this->package_id;
     }
