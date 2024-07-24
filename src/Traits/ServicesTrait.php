@@ -26,6 +26,13 @@ trait ServicesTrait
     protected $parameter;
 
     /**
+     * Сумма услуги.
+     *
+     * @var float
+     */
+    protected $sum;
+
+    /**
      * Устанавливает код дополнительной услуги.
      *
      * @param string $code Код дополнительной услуги
@@ -71,5 +78,29 @@ trait ServicesTrait
     public function getCode()
     {
         return $this->code;
+    }
+
+    /**
+     * Устанавливает суммму услуги.
+     *
+     * @param float $sum Сумма дополнительной услуги
+     *
+     * @return self
+     */
+    public function setSum(float $sum)
+    {
+        $this->sum = $sum;
+
+        return $this;
+    }
+
+    /**
+     * Получить сумму услуги.
+     *
+     * @return float
+     */
+    public function getSum()
+    {
+        return $this->sum;
     }
 }
