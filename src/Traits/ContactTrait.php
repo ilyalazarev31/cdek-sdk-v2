@@ -85,6 +85,51 @@ trait ContactTrait
      */
     protected $tin;
 
+    public function getCompany()
+    {
+        return $this->company;
+    }
+
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    public function getPhones()
+    {
+        return $this->phones;
+    }
+
+    public function getPasportSeries()
+    {
+        return $this->passport_series;
+    }
+
+    public function getPasportNumber()
+    {
+        return $this->passport_number;
+    }
+
+    public function getPasportDateOfIssue()
+    {
+        return $this->passport_date_of_issue;
+    }
+
+    public function getPasportOrganization()
+    {
+        return $this->passport_organization;
+    }
+
+    public function getPasportDateOfBirth()
+    {
+        return $this->passport_date_of_birth;
+    }
+    
     /**
      * Устанавливает название компании.
      *
