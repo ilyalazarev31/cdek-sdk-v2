@@ -221,7 +221,7 @@ class OrderResponse extends Source
             }
         }
 
-        return (!empty($newest)) ? end($newest)['uuid'] : null;
+        return (!empty($newest)) ? reset($newest)['uuid'] : null;
     }
 
     /**
