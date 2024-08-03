@@ -32,6 +32,102 @@ trait ServicesTrait
      */
     protected $sum;
 
+    protected $total_sum;
+    protected $discount_percent;
+    protected $discount_sum;
+    protected $vat_rate;
+    protected $vat_sum;
+
+    /**
+     * @return mixed
+     */
+    public function getTotalSum()
+    {
+        return $this->total_sum;
+    }
+
+    /**
+     * @param mixed $total_sum
+     */
+    public function setTotalSum($total_sum)
+    {
+        $this->total_sum = $total_sum;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDiscountPercent()
+    {
+        return $this->discount_percent;
+    }
+
+    /**
+     * @param mixed $discount_percent
+     */
+    public function setDiscountPercent($discount_percent)
+    {
+        $this->discount_percent = $discount_percent;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDiscountSum()
+    {
+        return $this->discount_sum;
+    }
+
+    /**
+     * @param mixed $discount_sum
+     */
+    public function setDiscountSum($discount_sum)
+    {
+        $this->discount_sum = $discount_sum;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getVatRate()
+    {
+        return $this->vat_rate;
+    }
+
+    /**
+     * @param mixed $vat_rate
+     */
+    public function setVatRate($vat_rate)
+    {
+        $this->vat_rate = $vat_rate;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getVatSum()
+    {
+        return $this->vat_sum;
+    }
+
+    /**
+     * @param mixed $vat_sum
+     */
+    public function setVatSum($vat_sum)
+    {
+        $this->vat_sum = $vat_sum;
+
+        return $this;
+    }
+
     /**
      * Устанавливает код дополнительной услуги.
      *
