@@ -149,7 +149,7 @@ trait TariffTrait
      *
      * @return self
      */
-    public function setServices(Services $services)
+    public function setServices(array $services)
     {
         $this->services = $services;
 
