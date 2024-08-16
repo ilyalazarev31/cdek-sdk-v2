@@ -159,7 +159,9 @@ final class CdekClientV2
         $json = $response->getBody()->getContents();
         $apiResponse = json_decode($json, true);
 
-        $this->checkErrors($method, $response, $apiResponse);
+        if($type != 'GET' && $method != Constants::ORDERS_URL) {
+            $this->checkErrors($method, $response, $apiResponse);
+        }
 
         return $apiResponse;
     }
