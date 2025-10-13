@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (c) Antistress.Store® 2021. All rights reserved.
+ * Copyright (c) Antistress.Store® 2024. All rights reserved.
  * See LICENSE.md for license details.
  *
  * @author Sergey Gusev
@@ -28,6 +28,13 @@ class Tariff extends Source
      * @var int
      */
     protected $currency;
+
+    /**
+     * Локализация по умолчанию 'rus'.
+     *
+     * @var string|null
+     */
+    protected $lang;
 
     /**
      * Установка даты и времени планируемой передачи заказа (дата и время в формате ISO 8601: YYYY-MM-DDThh:mm:ss±hhmm).
@@ -157,8 +164,8 @@ class Tariff extends Source
         $services_array = [];
         $services_pattern = Constants::SERVICE_CODES;
         foreach ($services as $key => $value) {
-            $service_name = (!empty($key)) ? $key : $value;
-            if (!empty($key) && array_key_exists($key, $services_pattern)) {
+            $service_name = ( ! empty($key)) ? $key : $value;
+            if ( ! empty($key) && array_key_exists($key, $services_pattern)) {
                 $services_array[] = (new Services())->setCode($key)->setParameter($value);
             } elseif (empty($key) && array_key_exists($value, $services_pattern)) {
                 $services_array[] = (new Services())->setCode($value);

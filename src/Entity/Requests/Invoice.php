@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) Antistress.Store® 2021. All rights reserved.
+ * Copyright (c) Antistress.Store® 2024. All rights reserved.
  * See LICENSE.md for license details.
  *
  * @author Sergey Gusev
@@ -37,7 +37,7 @@ class Invoice extends Source
     /**
      * Установить параметр - список заказов.
      *
-     * @param Order[] $orders Список заказов
+     * @param Order $orders Список заказов
      *
      * @return self
      */

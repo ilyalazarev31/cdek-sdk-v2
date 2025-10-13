@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (c) Antistress.Store® 2021. All rights reserved.
+ * Copyright (c) Antistress.Store® 2024. All rights reserved.
  * See LICENSE.md for license details.
  *
  * @author Sergey Gusev
@@ -61,6 +61,13 @@ trait PackageTrait
      * @var string
      */
     protected $comment;
+
+    /**
+     * Id упаковки.
+     *
+     * @var string
+     */
+    protected $package_id;
 
     /**
      * Позиции товаров в упаковке.
@@ -124,7 +131,7 @@ trait PackageTrait
 
         return $this;
     }
-    
+
     /**
      * Возвращает позиции товаров в упаковке.
      *
@@ -133,7 +140,7 @@ trait PackageTrait
     public function getItems()
     {
         return $this->items;
-    }    
+    }
 
     /**
      * Получить значение - общий вес (в граммах).
@@ -269,5 +276,39 @@ trait PackageTrait
         $this->comment = $comment;
 
         return $this;
+    }
+
+    /**
+     * Получить значение - id упаковке.
+     *
+     * @return string
+     */
+    public function getPackageId()
+    {
+        return $this->package_id;
+    }
+
+    /**
+     * Установить значение - id упаковки.
+     *
+     * @param string $package_id id упаковке
+     *
+     * @return self
+     */
+    public function setPackageId(string $package_id)
+    {
+        $this->package_id = $package_id;
+
+        return $this;
+    }
+
+    /**
+     * Получить параметр - номер
+     *
+     * @return string
+     */
+    public function getNumber()
+    {
+        return $this->number;
     }
 }

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (c) Antistress.Store® 2021. All rights reserved.
+ * Copyright (c) Antistress.Store® 2024. All rights reserved.
  * See LICENSE.md for license details.
  *
  * @author Sergey Gusev
@@ -54,6 +54,15 @@ trait LocationTrait
      * @var string
      */
     protected $country_code;
+    
+    /**
+     * Название страны
+     *
+     * @example Россия, США
+     *
+     * @var string
+     */
+    protected $country;    
 
     /**
      * Название региона.

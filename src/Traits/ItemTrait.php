@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (c) Antistress.Store® 2021. All rights reserved.
+ * Copyright (c) Antistress.Store® 2024. All rights reserved.
  * See LICENSE.md for license details.
  *
  * @author Sergey Gusev
@@ -110,6 +110,13 @@ trait ItemTrait
      * @var string
      */
     protected $url;
+
+    /**
+     * Код ТН ВЭД для международных заказов
+     *
+     * @var string
+     */
+    protected $feacn_code;
 
     /**
      * Устанавливает наименование товара.
@@ -285,7 +292,7 @@ trait ItemTrait
     }
 
     /**
-     * Устанавливает содержит ли радиочастотные модули (wifi/gsm).
+     * Устанавливает наличие радиочастотных модулей (wifi/gsm).
      *
      * @param bool $wifi_gsm Содержит ли радиочастотные модули (wifi/gsm)
      *
@@ -308,6 +315,20 @@ trait ItemTrait
     public function setUrl(string $url)
     {
         $this->url = $url;
+
+        return $this;
+    }
+
+    /**
+     * Устанавливает Код ТН ВЭД.
+     *
+     * @param string $feacn_code Код ТН ВЭД
+     *
+     * @return self
+     */
+    public function setFeacnCode(string $feacn_code)
+    {
+        $this->feacn_code = $feacn_code;
 
         return $this;
     }
@@ -460,5 +481,15 @@ trait ItemTrait
     public function getUrl()
     {
         return $this->url;
+    }
+
+    /**
+     * Get Код ТН ВЭД
+     *
+     * @return string
+     */
+    public function getFeacnCode()
+    {
+        return $this->feacn_code;
     }
 }

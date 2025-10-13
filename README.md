@@ -2,7 +2,6 @@
   <tr>
   <td><a href="https://antistress.store/"><img align="left" width="230" src="https://antistress.store/mediafiles/logo.png"></a></td>
     <td style="font-size:1.2em"><strong> antistress-store/cdek-sdk-v2 </strong></td>
-    <td><a href="https://www.cdek.ru/ru/integration"><img align="right" width="230" src="https://webcdn.cdek.ru/img/223dd4e.png"></a> </td>
   </tr>
  
 </table>
@@ -50,6 +49,7 @@
     - [Получение информации о переводе наложенного платежа](#получение-информации-о-переводе-наложенного-платежа)
     - [Получение информации о чеках](#получение-информации-о-чеках)
     - [Подписка на вебхуки (Webhooks)](#подписка-на-вебхуки-webhooks)
+    - [Получение реестров наложенных платежей](#получение-реестров-наложеных-платежей)
   - [Известные проблемы](#известные-проблемы)
   - [Лицензия](#лицензия)
   
@@ -90,8 +90,12 @@
 | [Получение информации о наложенных платежах](#получение-информации-о-переводе-наложенного-платежа)             | `getPayments`              | `date`         | PaymentResponse          |
 | [Получение информации о чеках](#получение-информации-о-чеках)             | `getChecks`                | `check`        | CheckResponse            |
 | [Подписка на вебхуки (Webhooks)](#подписка-на-вебхуки-webhooks)                                                | `setWebhooks`              | `webhooks`     | EntityResponse           |
+| [Получение реестров наложенных платежей](#получение-реестров-наложеных-платежей)                                                | `getRegistries`              | `date`     | RegistryResponse           |
 ****
 ## История
+### с версии v1.2.3 детальная информация об истории содержится в [релизах](https://github.com/AntistressStore/cdek-sdk-v2/releases)
+- v1.2.2 В CdekClientV2 добавлены строгие типы возврата значений (будьте внимательны). Исправлен метод getWebhooks (спасибо [Ilya Brilev](https://github.com/ilyabrilev)). Добавлены класс и его тесты WebhookListResponce
+- v1.2 Добавлены первые тесты DeliveryPoints и Tariff, исправлены тестовые логин и пароль (обновились у сдэк)
 - v1.1.1 Обновили ссылку на документацию. Спасибо [Nikolay Lapay](https://github.com/iamwildtuna)
 - v1.1 
 + Добавлена возможность изменять таймаут соединения.
@@ -198,6 +202,8 @@ $result->getDeliverySum(); // Стоимость доставки
 $result->getDeliveryMode(); // Режим тарифа
 $result->getPeriodMin(); // Минимальное время доставки (в рабочих днях)	
 $result->getPeriodMax(); // Максимальное время доставки (в рабочих днях)	
+$result->getCalendarMin()
+$result->getCalendarMax()
 }
 
 ```
@@ -222,10 +228,47 @@ $tariff_response = $cdek_client->calculateTariff($tariff); // TariffResponse
 ->getDeliverySum()
 ->getPeriodMin()
 ->getPeriodMax()
+->getCalendarMin()
+->getCalendarMax()
 ->getWeightCalc()
 ->getTotalSum()
 ->getCurrency()
 ->getServices()
+```
+
+Расчет стоимости тарифа + Страховка
+```php
+  $tariff = (new Tariff())
+            ->setCityCodes(172, 172)
+            ->setTariffCode(136)
+            ->setPackageWeight(500)
+            ->addServices(['INSURANCE' => 10000])
+        ;
+
+  $tariffResponce = $cdek_client->->calculateTariff($tariff);
+ 
+ //... При таких установках на выходе имеем рассчитанную суммы страховки, см  object = AntistressStore\CdekSDK2\Entity\Responses\ServicesResponse
+ 
+ $tariffResponce object = AntistressStore\CdekSDK2\Entity\Responses\TariffResponse
+    delivery_sum float = 1505
+    period_min int = 2
+    period_max int = 3
+    weight_calc int = 6000
+    calendar_min int = 2
+    calendar_max int = 3
+    total_sum float = 246
+    currency string = "RUB"
+  services array = array(1)
+   0 object = AntistressStore\CdekSDK2\Entity\Responses\ServicesResponse
+      code string = "INSURANCE"
+      sum float = 45
+      total_sum float = 54
+      discount_percent float = 0
+      discount_sum float = 0
+      vat_rate float = 0
+      vat_sum float = 0
+      parameter null = null
+
 ```
 ### Получение списка ПВЗ
 
@@ -383,11 +426,54 @@ $order->setRecipient($recipient);
 // Создаем данные посылки. Место
 
         $packages =
-        (new \AntistressStore\CdekSDK2\Entity\Requests\Package())->setNumber('1')->setWeight(500)
-            ->setHeight(10)->setWidth(10)
+            (new \AntistressStore\CdekSDK2\Entity\Requests\Package())
+            ->setNumber('1')
+            ->setWeight(500)->setHeight(10)->setWidth(10)
+            ->setLength(10)
+        ;
+```
+
+Исправлено в версии 1.2.3, следующие функции принимают mixed для обратной совместимости
+```
+AntistressStore\CdekSDK2\Entity\Requests\Order::setServices()
+public function setServices(mixed $services) 
+
+AntistressStore\CdekSDK2\Entity\Requests\Order::setPackages() 
+setPackages(mixed $packages)
+```
+Можно передавать как раньше один экземпляр класса Package или Services в этом случае добавитcя единичная упаковка или сервис, можно передавать целым массивом, тогда массив элементов добавиться к существующим.
+Важно помнить, что массив должен содержать подготовленные классы Package `[Package,Package,...]` или Services `[Services,Services,...]`, пример для $packages:
+```php
+ \\ вариант 1 Один экземпляр класса
+        $packages =
+        (new \AntistressStore\CdekSDK2\Entity\Requests\Package())
+            ->setNumber('1')
+            ->setWeight(500)
+            ->setHeight(10)
+            ->setWidth(10)
             ->setLength(10)
         ;
 
+      $order->setPackages($packages);
+
+ \\ массив c экземплярами класса
+        $packages = [];
+
+        $packages[] =
+        (new \AntistressStore\CdekSDK2\Entity\Requests\Package())
+            ->setNumber('1')
+            ->setWeight(500)
+            ->setHeight(10)
+            ->setWidth(10)
+            ->setLength(10)
+        ;
+
+      $order->setPackages($packages);
+```
+Для добавления сервисов есть более удобная экспресс функция `->addServices(['INSURANCE' => 1000])` в которую передается массив ключ - значение, а функция сама подготовит правильный класс.
+
+
+```
 // Создаем товары
 
         $items = [];
@@ -399,6 +485,7 @@ $order->setRecipient($recipient);
             ->setWeight(100) // Вес в граммах
             ->setAmount(1) // Количество
         ;
+
 $packages->setItems($items);
 $order->setPackages($packages);
     

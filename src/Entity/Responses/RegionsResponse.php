@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (c) Antistress.Store® 2021. All rights reserved.
+ * Copyright (c) Antistress.Store® 2024. All rights reserved.
  * See LICENSE.md for license details.
  *
  * @author Sergey Gusev
@@ -19,7 +19,7 @@ class RegionsResponse extends Source
     protected $country;
 
     /**
-     * Код страны в формате  ISO_3166-1_alpha-2.
+     * Код страны в формате ISO_3166-1_alpha-2.
      *
      * @example RU, DE, TR
      *

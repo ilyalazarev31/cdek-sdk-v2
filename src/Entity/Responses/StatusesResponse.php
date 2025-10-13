@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (c) Antistress.Store® 2021. All rights reserved.
+ * Copyright (c) Antistress.Store® 2024. All rights reserved.
  * See LICENSE.md for license details.
  *
  * @author Sergey Gusev
@@ -48,6 +48,15 @@ class StatusesResponse extends Source
      * @var string
      */
     protected $city;
+    /**
+     * Признак удаления статуса. Может принимать значения:
+     *
+     * true - статус удалён;
+     * false - статус активен.
+     * Значение true может быть только у финальных статусов.
+     * @var boolean
+     */
+    protected $deleted;
 
     /**
      * Получить параметр - код статуса.
@@ -97,5 +106,15 @@ class StatusesResponse extends Source
     public function getCity()
     {
         return $this->city;
+    }
+
+    /**
+     *  Получить параметр - признак удаления статуса.
+     *
+     * @return bool
+     */
+    public function getDeleted()
+    {
+        return $this->deleted;
     }
 }

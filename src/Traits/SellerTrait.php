@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (c) Antistress.Store® 2021. All rights reserved.
+ * Copyright (c) Antistress.Store® 2024. All rights reserved.
  * See LICENSE.md for license details.
  *
  * @author Sergey Gusev
@@ -21,7 +21,7 @@ trait SellerTrait
     /**
      * ИНН истинного продавца.
      *
-     * @var int
+     * @var string
      */
     public $inn;
 
@@ -63,13 +63,13 @@ trait SellerTrait
     }
 
     /**
-     * Устанавливает иНН истинного продавца.
+     * Устанавливает ИНН истинного продавца.
      *
-     * @param int $inn ИНН истинного продавца
+     * @param string $inn ИНН истинного продавца
      *
      * @return self
      */
-    public function setInn(int $inn)
+    public function setInn(string $inn)
     {
         $this->inn = $inn;
 
