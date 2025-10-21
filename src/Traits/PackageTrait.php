@@ -63,13 +63,6 @@ trait PackageTrait
     protected $comment;
 
     /**
-     * Id упаковки.
-     *
-     * @var string
-     */
-    protected $package_id;
-
-    /**
      * Позиции товаров в упаковке.
      *
      * @var Item[]
@@ -276,39 +269,5 @@ trait PackageTrait
         $this->comment = $comment;
 
         return $this;
-    }
-
-    /**
-     * Получить значение - id упаковке.
-     *
-     * @return string
-     */
-    public function getPackageId()
-    {
-        return $this->package_id;
-    }
-
-    /**
-     * Установить значение - id упаковки.
-     *
-     * @param string $package_id id упаковке
-     *
-     * @return self
-     */
-    public function setPackageId(string $package_id)
-    {
-        $this->package_id = $package_id;
-
-        return $this;
-    }
-
-    /**
-     * Получить параметр - номер
-     *
-     * @return string
-     */
-    public function getNumber()
-    {
-        return $this->number;
     }
 }
