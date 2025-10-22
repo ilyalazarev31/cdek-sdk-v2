@@ -9,6 +9,8 @@
 
 namespace AntistressStore\CdekSDK2\Traits;
 
+use AntistressStore\CdekSDK2\Entity\Requests\Contact;
+
 trait CommonTrait
 {
     /**

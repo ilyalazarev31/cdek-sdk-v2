@@ -312,8 +312,8 @@ final class CdekClientV2
             throw new CdekV2RequestException('От API CDEK при вызове метода '.$method.' пришел пустой ответ', $response->getStatusCode());
         }
         if (
-            $response->getStatusCode() > 202 && isset($apiResponse['requests'][0]['errors'])
-            || isset($apiResponse['requests'][0]['state']) && $apiResponse['requests'][0]['state'] == 'INVALID'
+            ($response->getStatusCode() > 202 && isset($apiResponse['requests'][0]['errors']))
+            || (isset($apiResponse['requests'][0]['state']) && $apiResponse['requests'][0]['state'] === 'INVALID')
         ) {
             $message = CdekV2RequestException::getTranslation(
                 $apiResponse['requests'][0]['errors'][0]['code'],
@@ -322,8 +322,8 @@ final class CdekClientV2
             throw new CdekV2RequestException('От API CDEK при вызове метода '.$method.' получена ошибка: '.$message, $response->getStatusCode());
         }
         if (
-            $response->getStatusCode() == 200 && isset($apiResponse['errors'])
-            || isset($apiResponse['state']) && $apiResponse['state'] == 'INVALID' || $response->getStatusCode() !== 200 && isset($apiResponse['errors'])
+            ($response->getStatusCode() == 200 && isset($apiResponse['errors']))
+            || (isset($apiResponse['state']) && $apiResponse['state'] === 'INVALID') || ($response->getStatusCode() !== 200 && isset($apiResponse['errors']))
         ) {
             $message = CdekV2RequestException::getTranslation(
                 $apiResponse['errors'][0]['code'],
@@ -450,7 +450,7 @@ final class CdekClientV2
     {
         $request = new EntityResponse($this->apiRequest('DELETE', Constants::ORDERS_URL.'/'.$uuid));
 
-        if ($request->getRequests()[0]->getState() != 'INVALID') {
+        if ($request->getRequests()[0]->getState() !== 'INVALID') {
             return false;
         }
     }
