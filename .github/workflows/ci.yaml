@@ -29,7 +29,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -43,7 +43,7 @@ jobs:
         run: echo "::set-output name=dir::$(composer config cache-files-dir)"
 
       - name: Cache dependencies
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: composer-${{ matrix.php-version }}-${{ hashFiles('composer.*') }}
@@ -58,7 +58,9 @@ jobs:
       - name: Parallel PHP Lint
         run: |
           vendor/bin/parallel-lint --exclude vendor .
-          
-      - name: PHP Unit tests
-        run: |
-          vendor/bin/phpunit --no-coverage
+
+      - name: Run PHP Unit tests
+        run: vendor/bin/phpunit --no-coverage --testdox --exclude-group=slow
+        env: 
+         CDEK_ACCOUNT: ${{ secrets.CDEK_ACCOUNT }}
+         CDEK_SECURE_PASSWORD: ${{ secrets.CDEK_SECURE_PASSWORD }}

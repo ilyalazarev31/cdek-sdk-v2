@@ -22,7 +22,8 @@ use AntistressStore\CdekSDK2\Entity\Responses\{
     RegionsResponse,
     TariffListResponse,
     TariffResponse,
-    WebhookListResponse
+    AvailableTariffsResponse,
+    WebhookListResponse,
 };
 use AntistressStore\CdekSDK2\Entity\Responses\{CheckResponse, PaymentResponse, RegistryResponse};
 use AntistressStore\CdekSDK2\Exceptions\{CdekV2AuthException, CdekV2RequestException};
@@ -81,6 +82,11 @@ final class CdekClientV2
 
     /** @var GuzzleClient */
     private $http;
+
+    public function setHttp($http){
+        $this->http = $http;
+        return $this;
+    }
 
     /**
      * Конструктор клиента Guzzle.
@@ -422,6 +428,24 @@ final class CdekClientV2
         $resp = [];
         foreach ($response['tariff_codes'] as $key => $value) {
             $resp[] = new TariffListResponse($value);
+        }
+
+        return $resp;
+    }
+
+    /**
+     * Список доступных тарифов по договору.
+     *
+     * @return AvailableTariffsResponse[]
+     * @throws CdekV2RequestException
+     */
+    public function getAvailableTariffs(): array
+    {
+        $response = $this->apiRequest('GET', Constants::AVAILABLE_TARIFF_LIST_URL);
+
+        $resp = [];
+        foreach ($response['tariff_codes'] as $key => $value) {
+            $resp[] = new AvailableTariffsResponse($value);
         }
 
         return $resp;
