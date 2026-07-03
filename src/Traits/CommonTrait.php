@@ -166,6 +166,15 @@ trait CommonTrait
     }
 
     /**
+     * @return self
+     */
+    public function setSender(Contact $sender)
+    {
+        $this->sender = $sender;
+        return $this;
+    }
+
+    /**
      * Получить параметр - номер заказа в ИС Клиента.
      *
      * @return string
